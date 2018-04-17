@@ -28,7 +28,7 @@
  void i_cls(chip8_p chip)
 {
     printf("%04X: CLS\n", chip->PC);
-    for (int i = 0; i < ((CHIP8E_XRES * CHIP8E_YRES) >> 3); i++) {
+    for (int i = 0; i < (CHIP8E_XRES * CHIP8E_YRES); i++) {
         chip->video_buffer[i] = 0x0;
     }
     chip->PC += 2;

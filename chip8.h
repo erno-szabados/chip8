@@ -8,7 +8,7 @@
 #include <time.h>
 
 // Instruction time
-#define CHIP8E_CMD_TS_DELAY_MS 1000
+#define CHIP8E_CMD_TS_DELAY_MS 100
 
 // bytes
 #define CHIP8E_MEM_SIZE 4096
@@ -69,7 +69,10 @@ typedef enum {CHIP_STATE_NORMAL, CHIP_STATE_EXCEPTION, CHIP_STATE_EXIT} chip8_st
 typedef struct {
     uint16_t opcode;
     uint8_t memory[CHIP8E_MEM_SIZE];
-    uint8_t video_buffer[(CHIP8E_XRES * CHIP8E_YRES) >> 3];
+    // It would be sufficient to store 1 bit per pixel, but
+    // then showing it would require expensive bit->byte extensions
+    // Modern GUI libraries usually do not deal well with 1-bpp depth.
+    uint8_t video_buffer[CHIP8E_XRES * CHIP8E_YRES];
     bool video_dirty;
     uint16_t stack[CHIP8E_STACK_SIZE];
     // v0..15 general purpose register
